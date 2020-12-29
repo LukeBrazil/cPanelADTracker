@@ -4,15 +4,23 @@ import axios from 'axios';
 
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
+import Candidates from './components/Candidates';
 
 
 
 function App() {
   return (
     <div>
-      <Router>
+      {/* <Router>
+				<LandingPage />
+			</Router> */}
+      {/* <Router path='/dashboard'>
 				<Dashboard />
+			</Router> */}
+      <Router path='/candidates'>
+				<Candidates />
 			</Router>
+
     </div>
    
   )
