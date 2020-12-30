@@ -7,7 +7,7 @@ import Dashboard from './components/Dashboard';
 import Candidates from './components/Candidates';
 
 
-
+// add small change
 function App() {
   return (
     <div>
@@ -18,7 +18,7 @@ function App() {
 				<Dashboard />
 			</Router> */}
       <Router path='/candidates'>
-				<Candidates />
+				<Candidates />  
 			</Router>
 
     </div>
