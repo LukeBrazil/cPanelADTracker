@@ -3,10 +3,15 @@ import { Route, Link } from "react-router-dom";
 import { Section, Button, Aside, Select } from "react-bulma-components";
 import axios from "axios";
 
+import UserSubmission from './UserSubmission';
+import TaskSubmission from './TaskSubmission';
+import ReportSubmission from './ReportSubmission';
+
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [admins, setAdmins] = useState([]);
+  const [reports, setReports] = useState([]);
 
   const getTasks = () => {
     axios
@@ -37,6 +42,15 @@ export default function Dashboard() {
         setAdmins(response.data.user);
       });
   };
+  const getReports = () => {
+    axios
+      .get("http://127.0.0.1:5000/reports", {
+        headers: { "Access-Control-Allow-Origin": "*" },
+      })
+      .then(function (response) {
+        setReports(response.data.reports);
+      });
+  };
 
   return (
     <div>
@@ -64,6 +78,7 @@ export default function Dashboard() {
         <Button onClick={getCandidates}>Show Candidates</Button>
         <Button onClick={getAdmins}>Admin</Button>
         <Button onClick={getTasks}>Tasks</Button>
+        <Button onClick={getReports}>Reports</Button>
       </Section>
 
 
@@ -120,6 +135,43 @@ export default function Dashboard() {
           </tbody>
         </table>
       </Section>
+      </Section>
+      
+      <Section>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Desrciption</th>
+              <th>Content</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tfoot></tfoot>
+          <tbody>
+            {reports.map((report) => {
+                  return (
+                    <tr>
+                      <th>{report.Name}</th>
+                      <td>{report.Benchmark}</td>
+                      <td>{report.Content}</td>
+                      <td>{report.Status}</td>
+                    </tr>
+                  );
+            })}
+          </tbody>
+        </table>
+      </Section>
+        
+
+      <Section>
+          <UserSubmission />
+      </Section>
+      <Section>
+          <TaskSubmission />
+      </Section>
+      <Section>
+          <ReportSubmission />
       </Section>
 
       
