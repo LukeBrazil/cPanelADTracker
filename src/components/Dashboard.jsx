@@ -3,6 +3,9 @@ import { Route, Link } from "react-router-dom";
 import { Section, Button, Aside, Select } from "react-bulma-components";
 import axios from "axios";
 
+import UserSubmission from './UserSubmission';
+import TaskSubmission from './TaskSubmission';
+
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [candidates, setCandidates] = useState([]);
@@ -120,6 +123,12 @@ export default function Dashboard() {
           </tbody>
         </table>
       </Section>
+      </Section>
+      <Section>
+          <UserSubmission />
+      </Section>
+      <Section>
+          <TaskSubmission />
       </Section>
 
       
