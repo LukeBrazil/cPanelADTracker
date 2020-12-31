@@ -13,12 +13,12 @@ function App() {
     <div>
       {/* <Router>
 				<LandingPage />
-			</Router> */}
-      {/* <Router path='/dashboard'>
-				<Dashboard />
-			</Router> */}
+			</Router>
       <Router path='/candidates'>
 				<Candidates />  
+			</Router> */}
+      <Router path='/dashboard'>
+				<Dashboard />
 			</Router>
 
     </div>
