@@ -16,7 +16,9 @@ export default function Candidates() {
 			.then(function(response) {
 				setCandidates(response.data.user);
 			});
-	};
+    };
+    
+    
   return (
     <div>
       <Section class="hero is-dark">
