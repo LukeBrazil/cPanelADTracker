@@ -13,53 +13,75 @@ export default function Dashboard() {
   const [admins, setAdmins] = useState([]);
   const [reports, setReports] = useState([]);
 
+  const [reportModal, setReportModal] = useState("modal");
+  const [taskModal, setTaskModal] = useState("modal");
+  const [userModal, setUserModal] = useState("modal");
+  const [notActive, setNotActive] = useState("modal");
+
+  const reportButton = () => {
+    setReportModal("modal is-active");
+  };
+  const closeReportButton = () => {
+    setReportModal("modal");
+  };
+  const taskButton = () => {
+    setTaskModal("modal is-active");
+  };
+  const closeTaskButton = () => {
+    setTaskModal("modal");
+  };
+  const userButton = () => {
+    setUserModal("modal is-active");
+  };
+  const closeUserButton = () => {
+    setUserModal("modal");
+  };
+
   useEffect(() => {
     const getTasks = () => {
-        axios
-          .get("http://127.0.0.1:5000/tasks", {
-            headers: { "Access-Control-Allow-Origin": "*" },
-          })
-          .then(function (response) {
-            setTasks(response.data.tasks);
-          });
-      };
-      getTasks()
+      axios
+        .get("http://127.0.0.1:5000/tasks", {
+          headers: { "Access-Control-Allow-Origin": "*" },
+        })
+        .then(function (response) {
+          setTasks(response.data.tasks);
+        });
+    };
+    getTasks();
 
-      const getCandidates = () => {
-        axios
-          .get("http://127.0.0.1:5000/users", {
-            headers: { "Access-Control-Allow-Origin": "*" },
-          })
-          .then(function (response) {
-            setCandidates(response.data.user);
-          });
-      };
-      getCandidates()
+    const getCandidates = () => {
+      axios
+        .get("http://127.0.0.1:5000/users", {
+          headers: { "Access-Control-Allow-Origin": "*" },
+        })
+        .then(function (response) {
+          setCandidates(response.data.user);
+        });
+    };
+    getCandidates();
 
-      const getAdmins = () => {
-        axios
-          .get("http://127.0.0.1:5000/users", {
-            headers: { "Access-Control-Allow-Origin": "*" },
-          })
-          .then(function (response) {
-            setAdmins(response.data.user);
-          });
-      };
-      getAdmins()
+    const getAdmins = () => {
+      axios
+        .get("http://127.0.0.1:5000/users", {
+          headers: { "Access-Control-Allow-Origin": "*" },
+        })
+        .then(function (response) {
+          setAdmins(response.data.user);
+        });
+    };
+    getAdmins();
 
-      const getReports = () => {
-        axios
-          .get("http://127.0.0.1:5000/reports", {
-            headers: { "Access-Control-Allow-Origin": "*" },
-          })
-          .then(function (response) {
-            setReports(response.data.reports);
-          });
-      };
-          getReports()
-
-    
-  }, [])
+    const getReports = () => {
+      axios
+        .get("http://127.0.0.1:5000/reports", {
+          headers: { "Access-Control-Allow-Origin": "*" },
+        })
+        .then(function (response) {
+          setReports(response.data.reports);
+        });
+    };
+    getReports();
+  }, []);
 
   return (
     <div>
@@ -67,33 +89,101 @@ export default function Dashboard() {
         <div class="hero-body">
           <div class="container">
             <h1 class="title">cPanel Associate Developer Tracker</h1>
+            <div class="select">
+              <select>
+                <option>Select Admin</option>
+                {admins.map((admin) => {
+                  for (var i = 0; i < admins.length; i++) {
+                    if (admin.User_Type === "admin") {
+                      return <option>{admin.username}</option>;
+                    }
+                  }
+                })}
+              </select>
+            </div>
           </div>
         </div>
+        <nav class="navbar is-light">
+          <div class="container ml-6">
+            <button class="button is-dark" onClick={userButton}>
+              Add User
+            </button>
+            <button class="button is-dark" onClick={taskButton}>
+              Add Task
+            </button>
+            <button
+              class="button is-dark"
+              id="reportButton"
+              onClick={reportButton}
+            >
+              Add Report
+            </button>
+            <div className={reportModal}>
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Report Submission</p>
+                  <button
+                    onClick={closeReportButton}
+                    class="delete"
+                    aria-label="close"
+                  ></button>
+                </header>
+                <section class="modal-card-body">
+                  <ReportSubmission />
+                </section>
+                <footer class="modal-card-foot"></footer>
+              </div>
+            </div>
+            <div className={taskModal}>
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Task Submission</p>
+                  <button
+                    onClick={closeTaskButton}
+                    class="delete"
+                    aria-label="close"
+                  ></button>
+                </header>
+                <section class="modal-card-body">
+                  <TaskSubmission />
+                </section>
+                <footer class="modal-card-foot"></footer>
+              </div>
+            </div>
+            <div className={userModal}>
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">User Submission</p>
+                  <button
+                    onClick={closeUserButton}
+                    class="delete"
+                    aria-label="close"
+                  ></button>
+                </header>
+                <section class="modal-card-body">
+                  <UserSubmission />
+                </section>
+                <footer class="modal-card-foot"></footer>
+              </div>
+            </div>
+          </div>
+        </nav>
       </Section>
 
-      <div class="container">
-        <div class="select">
-          <select>
-            {admins.map((admin) => {
-              for (var i = 0; i < admins.length; i++) {
-                if (admin.User_Type === "admin") {
-                  return <option>{admin.username}</option>;
-                }
-              }
-            })}
-          </select>
-        </div>
-
-      </div>
-
-        <div class="columns">
+      <div class="columns">
         <div class="column">
           <table class="table is-striped">
             <thead>
               <tr>
+                <th>Candidates</th>
+              </tr>
+              <tr>
                 <th>Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>First</th>
+                <th>Last</th>
                 <th>UserName</th>
                 <th>Position</th>
                 <th>Tasks</th>
@@ -119,70 +209,61 @@ export default function Dashboard() {
             </tbody>
           </table>
         </div>
-      
-      <div class="column">
-        <table class="table is-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Desrciption</th>
-            </tr>
-          </thead>
-          <tfoot></tfoot>
-          <tbody>
-            {tasks.map((task) => {
-              return (
-                <tr>
-                  <th>{task.name}</th>
-                  <td>{task.description}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
 
-      <div class='column'>
-      <table class="table is-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Desrciption</th>
-              <th>Content</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tfoot></tfoot>
-          <tbody>
-            {reports.map((report) => {
-              return (
-                <tr>
-                  <th>{report.Name}</th>
-                  <td>{report.Benchmark}</td>
-                  <td>{report.Content}</td>
-                  <td>{report.Status}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+        <div class="column">
+          <table class="table is-striped">
+            <thead>
+              <tr>
+                <th>Tasks</th>
+              </tr>
+              <tr>
+                <th>Name</th>
+                <th>Desrciption</th>
+              </tr>
+            </thead>
+            <tfoot></tfoot>
+            <tbody>
+              {tasks.map((task) => {
+                return (
+                  <tr>
+                    <th>{task.name}</th>
+                    <td>{task.description}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
 
+        <div class="column">
+          <table class="table is-striped">
+            <thead>
+              <tr>
+                <th>Reports</th>
+              </tr>
+              <tr>
+                <th>Name</th>
+                <th>Desrciption</th>
+                <th>Content</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tfoot></tfoot>
+            <tbody>
+              {reports.map((report) => {
+                return (
+                  <tr>
+                    <th>{report.Name}</th>
+                    <td>{report.Benchmark}</td>
+                    <td>{report.Content}</td>
+                    <td>{report.Status}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-    
-    <div class='container'>
-        <div class='columns'>
-            <div class='column'>
-                <UserSubmission />
-            </div>
-            <div class='column'>
-                <TaskSubmission />
-            </div>
-            <div class='column'>
-                <ReportSubmission />
-            </div>
-        </div>
-    </div>
+      </div>
     </div>
   );
 }
