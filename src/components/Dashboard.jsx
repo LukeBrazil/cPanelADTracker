@@ -130,7 +130,7 @@ export default function Dashboard() {
                   ></button>
                 </header>
                 <section class="modal-card-body">
-                  <ReportSubmission />
+                  <ReportSubmission candidates={candidates}/>
                 </section>
                 <footer class="modal-card-foot"></footer>
               </div>
@@ -147,7 +147,7 @@ export default function Dashboard() {
                   ></button>
                 </header>
                 <section class="modal-card-body">
-                  <TaskSubmission />
+                  <TaskSubmission candidates={candidates}/>
                 </section>
                 <footer class="modal-card-foot"></footer>
               </div>
@@ -164,7 +164,7 @@ export default function Dashboard() {
                   ></button>
                 </header>
                 <section class="modal-card-body">
-                  <UserSubmission />
+                  <UserSubmission candidates={candidates}/>
                 </section>
                 <footer class="modal-card-foot"></footer>
               </div>

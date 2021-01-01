@@ -3,7 +3,7 @@ import { Section, Button, Aside, Select, Form } from "react-bulma-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-export default function TaskSubmission() {
+export default function TaskSubmission( { candidates }) {
   const { register, handleSubmit, errors } = useForm();
 
   const reportSubmit = (data) => {
@@ -18,37 +18,48 @@ export default function TaskSubmission() {
   return (
     <div>
       <div class='container'>
-      <h1>Report Submission</h1>
         <form class='column' onSubmit={handleSubmit(reportSubmit)}>
           <input
-          class='input is-primary'
+          class='input'
           type="text" 
           placeholder="Name" 
           name="name" 
           ref={register} 
           />
           <input
-            class='input is-primary'
+            class='input'
             type="text"
             placeholder="Benchmark"
             name="benchmark"
             ref={register}
           />
           <input
-            class='input is-primary'
+            class='input'
             type="text"
             placeholder="Content"
             name="content"
             ref={register}
           />
           <input
-            class='input is-primary'
+            class='input'
             type="text"
             placeholder="Status"
             name="status"
             ref={register}
           />
-          <button class="button is-success" type="submit" >Submit</button>
+          <select class='select'>
+              <option>Choose Candidate</option>
+            {candidates.map((candidate) => {
+                for (var i = 0; i < candidates.length; i++) {
+                    if (candidate.User_Type === "candidate") {
+                        return (
+                            <option>{candidate.username}</option>
+                            )
+                        }
+                    }
+                })}
+          </select>
+                <button class="button is-success" type="submit" >Submit</button>
         </form>
       </div>
     </div>
