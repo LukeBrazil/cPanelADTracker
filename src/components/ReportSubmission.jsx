@@ -3,7 +3,7 @@ import { Section, Button, Aside, Select, Form } from "react-bulma-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-export default function TaskSubmission() {
+export default function TaskSubmission( { candidates }) {
   const { register, handleSubmit, errors } = useForm();
 
   const reportSubmit = (data) => {
@@ -17,35 +17,51 @@ export default function TaskSubmission() {
 
   return (
     <div>
-      <Section>
-        <form onSubmit={handleSubmit(reportSubmit)}>
-          <input 
+      <div class='container'>
+        <form class='column' onSubmit={handleSubmit(reportSubmit)}>
+          <input
+          class='input'
           type="text" 
           placeholder="Name" 
           name="name" 
           ref={register} 
           />
           <input
+            class='input'
             type="text"
             placeholder="Benchmark"
             name="benchmark"
             ref={register}
           />
           <input
+            class='input'
             type="text"
             placeholder="Content"
             name="content"
             ref={register}
           />
           <input
+            class='input'
             type="text"
             placeholder="Status"
             name="status"
             ref={register}
           />
-          <input type="submit" />
+          <select class='select'>
+              <option>Choose Candidate</option>
+            {candidates.map((candidate) => {
+                for (var i = 0; i < candidates.length; i++) {
+                    if (candidate.User_Type === "candidate") {
+                        return (
+                            <option>{candidate.username}</option>
+                            )
+                        }
+                    }
+                })}
+          </select>
+                <button class="button is-success" type="submit" >Submit</button>
         </form>
-      </Section>
+      </div>
     </div>
   );
 }
