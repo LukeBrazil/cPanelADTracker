@@ -3,9 +3,9 @@ import { Route, Link } from "react-router-dom";
 import { Section, Button, Aside, Select } from "react-bulma-components";
 import axios from "axios";
 
-import UserSubmission from './UserSubmission';
-import TaskSubmission from './TaskSubmission';
-import ReportSubmission from './ReportSubmission';
+import UserSubmission from "./UserSubmission";
+import TaskSubmission from "./TaskSubmission";
+import ReportSubmission from "./ReportSubmission";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
@@ -13,56 +13,65 @@ export default function Dashboard() {
   const [admins, setAdmins] = useState([]);
   const [reports, setReports] = useState([]);
 
-  const getTasks = () => {
-    axios
-      .get("http://127.0.0.1:5000/tasks", {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then(function (response) {
-        setTasks(response.data.tasks);
-      });
-  };
+  useEffect(() => {
+    const getTasks = () => {
+        axios
+          .get("http://127.0.0.1:5000/tasks", {
+            headers: { "Access-Control-Allow-Origin": "*" },
+          })
+          .then(function (response) {
+            setTasks(response.data.tasks);
+          });
+      };
+      getTasks()
 
-  const getCandidates = () => {
-    axios
-      .get("http://127.0.0.1:5000/users", {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then(function (response) {
-        setCandidates(response.data.user);
-      });
-  };
+      const getCandidates = () => {
+        axios
+          .get("http://127.0.0.1:5000/users", {
+            headers: { "Access-Control-Allow-Origin": "*" },
+          })
+          .then(function (response) {
+            setCandidates(response.data.user);
+          });
+      };
+      getCandidates()
 
-  const getAdmins = () => {
-    axios
-      .get("http://127.0.0.1:5000/users", {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then(function (response) {
-        setAdmins(response.data.user);
-      });
-  };
-  const getReports = () => {
-    axios
-      .get("http://127.0.0.1:5000/reports", {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then(function (response) {
-        setReports(response.data.reports);
-      });
-  };
+      const getAdmins = () => {
+        axios
+          .get("http://127.0.0.1:5000/users", {
+            headers: { "Access-Control-Allow-Origin": "*" },
+          })
+          .then(function (response) {
+            setAdmins(response.data.user);
+          });
+      };
+      getAdmins()
+
+      const getReports = () => {
+        axios
+          .get("http://127.0.0.1:5000/reports", {
+            headers: { "Access-Control-Allow-Origin": "*" },
+          })
+          .then(function (response) {
+            setReports(response.data.reports);
+          });
+      };
+          getReports()
+
+    
+  }, [])
 
   return (
     <div>
       <Section class="hero is-dark is-medium">
         <div class="hero-body">
           <div class="container">
-            <h1 class="title">Admin Overview</h1>
+            <h1 class="title">cPanel Associate Developer Tracker</h1>
           </div>
         </div>
       </Section>
 
-      <Section>
+      <div class="container">
         <div class="select">
           <select>
             {admins.map((admin) => {
@@ -75,47 +84,44 @@ export default function Dashboard() {
           </select>
         </div>
 
-        <Button onClick={getCandidates}>Show Candidates</Button>
-        <Button onClick={getAdmins}>Admin</Button>
-        <Button onClick={getTasks}>Tasks</Button>
-        <Button onClick={getReports}>Reports</Button>
-      </Section>
+      </div>
 
-
-
-      <Section>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>UserName</th>
-              <th>Position</th>
-              <th>Tasks</th>
-            </tr>
-          </thead>
-          <tfoot></tfoot>
-          <tbody>
-            {candidates.map((candidate) => {
-              for (var i = 0; i < candidates.length; i++) {
-                if (candidate.User_Type === "candidate") {
-                  return (
-                    <tr>
-                      <th>{candidate.User}</th>
-                      <td>{candidate.First_Name}</td>
-                      <td>{candidate.Last_Name}</td>
-                      <td>{candidate.username}</td>
-                      <td>{candidate.User_Type}</td>
-                    </tr>
-                  );
+        <div class="columns">
+        <div class="column">
+          <table class="table is-striped">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>UserName</th>
+                <th>Position</th>
+                <th>Tasks</th>
+              </tr>
+            </thead>
+            <tfoot></tfoot>
+            <tbody>
+              {candidates.map((candidate) => {
+                for (var i = 0; i < candidates.length; i++) {
+                  if (candidate.User_Type === "candidate") {
+                    return (
+                      <tr>
+                        <th>{candidate.User}</th>
+                        <td>{candidate.First_Name}</td>
+                        <td>{candidate.Last_Name}</td>
+                        <td>{candidate.username}</td>
+                        <td>{candidate.User_Type}</td>
+                      </tr>
+                    );
+                  }
                 }
-              }
-            })}
-          </tbody>
-        </table>
-        <Section>
-        <table class="table">
+              })}
+            </tbody>
+          </table>
+        </div>
+      
+      <div class="column">
+        <table class="table is-striped">
           <thead>
             <tr>
               <th>Name</th>
@@ -125,20 +131,19 @@ export default function Dashboard() {
           <tfoot></tfoot>
           <tbody>
             {tasks.map((task) => {
-                  return (
-                    <tr>
-                      <th>{task.name}</th>
-                      <td>{task.description}</td>
-                    </tr>
-                  );
+              return (
+                <tr>
+                  <th>{task.name}</th>
+                  <td>{task.description}</td>
+                </tr>
+              );
             })}
           </tbody>
         </table>
-      </Section>
-      </Section>
-      
-      <Section>
-        <table class="table">
+      </div>
+
+      <div class='column'>
+      <table class="table is-striped">
           <thead>
             <tr>
               <th>Name</th>
@@ -150,31 +155,34 @@ export default function Dashboard() {
           <tfoot></tfoot>
           <tbody>
             {reports.map((report) => {
-                  return (
-                    <tr>
-                      <th>{report.Name}</th>
-                      <td>{report.Benchmark}</td>
-                      <td>{report.Content}</td>
-                      <td>{report.Status}</td>
-                    </tr>
-                  );
+              return (
+                <tr>
+                  <th>{report.Name}</th>
+                  <td>{report.Benchmark}</td>
+                  <td>{report.Content}</td>
+                  <td>{report.Status}</td>
+                </tr>
+              );
             })}
           </tbody>
         </table>
-      </Section>
-        
+      </div>
 
-      <Section>
-          <UserSubmission />
-      </Section>
-      <Section>
-          <TaskSubmission />
-      </Section>
-      <Section>
-          <ReportSubmission />
-      </Section>
-
-      
+        </div>
+    
+    <div class='container'>
+        <div class='columns'>
+            <div class='column'>
+                <UserSubmission />
+            </div>
+            <div class='column'>
+                <TaskSubmission />
+            </div>
+            <div class='column'>
+                <ReportSubmission />
+            </div>
+        </div>
+    </div>
     </div>
   );
 }

@@ -29,41 +29,51 @@ export default function UserSubmission() {
 
   return (
       <div>
-              <Section>
+    <div class='container'>
+      <h1>User Submission</h1>
       <form onSubmit={handleSubmit(userSubmit)}>
         <input
+          class='input is-primary'
           type="text"
           placeholder="Username"
           name="username"
           ref={register}
         />
         <input
+          class='input is-primary'
           type="text"
           placeholder="First Name"
           name="first_name"
           ref={register}
         />
         <input
+          class='input is-primary'
           type="text"
           placeholder="Last Name"
           name="last_name"
           ref={register}
         />
         <input
+          class='input is-primary'
           type="password"
           placeholder="Password"
           name="password"
           ref={register}
         />
-        <input
+        <select
+          class='select is-primary'
           type="text"
           placeholder="user_type"
           name="user_type"
           ref={register}
-        />
-        <input type="submit" />
+        >
+          <option value='admin'>Admin</option>
+          <option value='candidate'>Candidate</option>
+          <option value='leadership'>Leadership</option>
+        </select>
+        <button class="button is-success" type="submit" >Submit</button>
       </form>
-    </Section>
+    </div>
       </div>
 
   );

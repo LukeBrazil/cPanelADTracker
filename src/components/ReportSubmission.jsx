@@ -17,35 +17,40 @@ export default function TaskSubmission() {
 
   return (
     <div>
-      <Section>
-        <form onSubmit={handleSubmit(reportSubmit)}>
-          <input 
+      <div class='container'>
+      <h1>Report Submission</h1>
+        <form class='column' onSubmit={handleSubmit(reportSubmit)}>
+          <input
+          class='input is-primary'
           type="text" 
           placeholder="Name" 
           name="name" 
           ref={register} 
           />
           <input
+            class='input is-primary'
             type="text"
             placeholder="Benchmark"
             name="benchmark"
             ref={register}
           />
           <input
+            class='input is-primary'
             type="text"
             placeholder="Content"
             name="content"
             ref={register}
           />
           <input
+            class='input is-primary'
             type="text"
             placeholder="Status"
             name="status"
             ref={register}
           />
-          <input type="submit" />
+          <button class="button is-success" type="submit" >Submit</button>
         </form>
-      </Section>
+      </div>
     </div>
   );
 }

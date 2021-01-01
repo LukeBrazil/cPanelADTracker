@@ -17,18 +17,20 @@ export default function TaskSubmission() {
 
   return (
     <div>
-      <Section>
+      <div class='container'>
+      <h1>Task Submission</h1>
         <form onSubmit={handleSubmit(taskSubmit)}>
-          <input type="text" placeholder="Name" name="name" ref={register} />
+          <input class='input is-primary' type="text" placeholder="Name" name="name" ref={register} />
           <input
+            class='input is-primary'
             type="text"
             placeholder="description"
             name="description"
             ref={register}
           />
-          <input type="submit" />
+          <button onClick="window.location.reload();" class="button is-success" type="submit" >Submit</button>
         </form>
-      </Section>
+      </div>
     </div>
   );
 }
