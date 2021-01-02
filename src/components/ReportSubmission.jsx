@@ -47,13 +47,16 @@ export default function TaskSubmission( { candidates }) {
             name="status"
             ref={register}
           />
-          <select class='select'>
+          <select class='select' 
+            name='username'
+            ref={register}
+          >
               <option>Choose Candidate</option>
             {candidates.map((candidate) => {
                 for (var i = 0; i < candidates.length; i++) {
                     if (candidate.User_Type === "candidate") {
                         return (
-                            <option>{candidate.username}</option>
+                            <option value={candidate.username}>{candidate.username}</option>
                             )
                         }
                     }

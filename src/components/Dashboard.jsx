@@ -13,10 +13,14 @@ export default function Dashboard() {
   const [admins, setAdmins] = useState([]);
   const [reports, setReports] = useState([]);
 
+  const [users, setUsers] = useState([]);
+
   const [reportModal, setReportModal] = useState("modal");
   const [taskModal, setTaskModal] = useState("modal");
   const [userModal, setUserModal] = useState("modal");
   const [notActive, setNotActive] = useState("modal");
+  const [report, setReport] = useState([]);
+  const [userReport, setUserReport] = useState("modal");
 
   const reportButton = () => {
     setReportModal("modal is-active");
@@ -36,6 +40,14 @@ export default function Dashboard() {
   const closeUserButton = () => {
     setUserModal("modal");
   };
+  const userReportButton = () => {
+    setUserReport("modal is-active");
+  };
+
+  const closeUserReport = () => {
+    setUserReport("modal");
+    setReport([]);
+  };
 
   useEffect(() => {
     const getTasks = () => {
@@ -44,6 +56,7 @@ export default function Dashboard() {
           headers: { "Access-Control-Allow-Origin": "*" },
         })
         .then(function (response) {
+          console.log("task data", response.data.tasks);
           setTasks(response.data.tasks);
         });
     };
@@ -56,6 +69,8 @@ export default function Dashboard() {
         })
         .then(function (response) {
           setCandidates(response.data.user);
+          console.log("user data", response.data.user);
+          console.log("user state", candidates);
         });
     };
     getCandidates();
@@ -77,6 +92,8 @@ export default function Dashboard() {
           headers: { "Access-Control-Allow-Origin": "*" },
         })
         .then(function (response) {
+          console.log("report data", response.data.reports);
+
           setReports(response.data.reports);
         });
     };
@@ -130,7 +147,7 @@ export default function Dashboard() {
                   ></button>
                 </header>
                 <section class="modal-card-body">
-                  <ReportSubmission candidates={candidates}/>
+                  <ReportSubmission candidates={candidates} />
                 </section>
                 <footer class="modal-card-foot"></footer>
               </div>
@@ -147,7 +164,7 @@ export default function Dashboard() {
                   ></button>
                 </header>
                 <section class="modal-card-body">
-                  <TaskSubmission candidates={candidates}/>
+                  <TaskSubmission candidates={candidates} />
                 </section>
                 <footer class="modal-card-foot"></footer>
               </div>
@@ -164,10 +181,53 @@ export default function Dashboard() {
                   ></button>
                 </header>
                 <section class="modal-card-body">
-                  <UserSubmission candidates={candidates}/>
+                  <UserSubmission candidates={candidates} />
                 </section>
                 <footer class="modal-card-foot"></footer>
               </div>
+            </div>
+          </div>
+          <div className={userReport}>
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Report</p>
+                <button
+                  onClick={closeUserReport}
+                  class="delete"
+                  aria-label="close"
+                ></button>
+              </header>
+              <section class="modal-card-body">
+                <table class="table is-striped">
+                  <thead>
+                    <tr>
+                      <th>{reports.User} Reports</th>
+                    </tr>
+                    <tr>
+                      <th>Name</th>
+                      <th>Benchmark</th>
+                      <th>Content</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tfoot></tfoot>
+                  <tbody>
+                    {reports.map((report) => {
+                      return (
+                        <tr>
+                      <th>{report.Name}</th>
+                      <th>{report.Benchmark}</th>
+                      <th>{report.Content}</th>
+                      <th>{report.Status}</th>
+                    </tr>
+                      )
+                    })}
+                    
+                  </tbody>
+                </table>
+              </section>
+              <footer class="modal-card-foot"></footer>
             </div>
           </div>
         </nav>
@@ -186,7 +246,7 @@ export default function Dashboard() {
                 <th>Last</th>
                 <th>UserName</th>
                 <th>Position</th>
-                <th>Tasks</th>
+                <th>Reports</th>
               </tr>
             </thead>
             <tfoot></tfoot>
@@ -194,6 +254,16 @@ export default function Dashboard() {
               {candidates.map((candidate) => {
                 for (var i = 0; i < candidates.length; i++) {
                   if (candidate.User_Type === "candidate") {
+                    const getReport = () => {
+                      axios
+                        .get(
+                          `http://127.0.0.1:5000/feedback/${candidate.username}`
+                        )
+                        .then(function (response) {
+                          setReport(response.data.reports);
+                          setUserReport('modal is-active')
+                        });
+                    };
                     return (
                       <tr>
                         <th>{candidate.User}</th>
@@ -201,6 +271,14 @@ export default function Dashboard() {
                         <td>{candidate.Last_Name}</td>
                         <td>{candidate.username}</td>
                         <td>{candidate.User_Type}</td>
+                        <td>
+                          <button
+                            class="button is-dark is-small"
+                            onClick={getReport}
+                          >
+                            See Reports
+                          </button>
+                        </td>
                       </tr>
                     );
                   }
