@@ -37,9 +37,9 @@ export default function TaskSubmission({ candidates }) {
             <option>Choose Candidate</option>
             {candidates.map((candidate) => {
               for (var i = 0; i < candidates.length; i++) {
-                if (candidate.User_Type === "candidate") {
+                if (candidate.user_type === "candidate") {
                   return (
-                    <option value={candidate.User}>{candidate.username}</option>
+                    <option value={candidate.user}>{candidate.username}</option>
                   );
                 }
               }
@@ -48,8 +48,7 @@ export default function TaskSubmission({ candidates }) {
 
           <button
             onClick="window.location.reload();"
-            class="button is-success"
-            type="submit"
+            class="button is-dark" type="submit" style={{color: '#FF6C2C', margin: '5px'}}
           >
             Submit
           </button>

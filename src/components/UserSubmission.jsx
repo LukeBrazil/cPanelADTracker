@@ -71,7 +71,7 @@ export default function UserSubmission( { candidates }) {
           <option value='candidate'>Candidate</option>
           <option value='leadership'>Leadership</option>
         </select>
-        <button class="button is-success" type="submit" >Submit</button>
+        <button class="button is-dark" type="submit" style={{color: '#FF6C2C', margin: '5px'}}>Submit</button>
       </form>
     </div>
       </div>
