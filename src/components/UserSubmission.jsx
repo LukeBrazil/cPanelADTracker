@@ -3,6 +3,8 @@ import { Section, Button, Aside, Select, Form } from "react-bulma-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
+import './styles.css'
+
 export default function UserSubmission( { candidates }) {
   const { register, handleSubmit, errors } = useForm();
   const [userData, setUserData] = useState([]);
@@ -71,7 +73,7 @@ export default function UserSubmission( { candidates }) {
           <option value='candidate'>Candidate</option>
           <option value='leadership'>Leadership</option>
         </select>
-        <button class="button is-success" type="submit" >Submit</button>
+        <button class="button" type="submit">Submit</button>
       </form>
     </div>
       </div>

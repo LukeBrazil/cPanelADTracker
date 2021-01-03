@@ -3,6 +3,8 @@ import { Section, Button, Aside, Select, Form } from "react-bulma-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
+import './styles.css'
+
 export default function TaskSubmission({ candidates }) {
   const { register, handleSubmit, errors } = useForm();
 
@@ -37,9 +39,9 @@ export default function TaskSubmission({ candidates }) {
             <option>Choose Candidate</option>
             {candidates.map((candidate) => {
               for (var i = 0; i < candidates.length; i++) {
-                if (candidate.User_Type === "candidate") {
+                if (candidate.user_type === "candidate") {
                   return (
-                    <option value={candidate.User}>{candidate.username}</option>
+                    <option value={candidate.user}>{candidate.username}</option>
                   );
                 }
               }
@@ -48,8 +50,7 @@ export default function TaskSubmission({ candidates }) {
 
           <button
             onClick="window.location.reload();"
-            class="button is-success"
-            type="submit"
+            class="button" type="submit"
           >
             Submit
           </button>

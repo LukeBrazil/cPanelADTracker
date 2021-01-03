@@ -6,16 +6,19 @@ import axios from "axios";
 import UserSubmission from "./UserSubmission";
 import TaskSubmission from "./TaskSubmission";
 import ReportSubmission from "./ReportSubmission";
+import MentorSubmission from "./MentorSubmission";
+
+import logo2 from "./img/logo2.svg";
+import "./styles.css";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [admins, setAdmins] = useState([]);
   const [reports, setReports] = useState([]);
-
   const [users, setUsers] = useState([]);
-
   const [reportModal, setReportModal] = useState("modal");
+  const [mentorModal, setMentorModal] = useState("modal");
   const [taskModal, setTaskModal] = useState("modal");
   const [userModal, setUserModal] = useState("modal");
   const [notActive, setNotActive] = useState("modal");
@@ -47,6 +50,14 @@ export default function Dashboard() {
   const closeUserReport = () => {
     setUserReport("modal");
     setReport([]);
+  };
+
+  const mentorButton = () => {
+    setMentorModal("modal is-active");
+  };
+
+  const closeMentorButton = () => {
+    setMentorModal("modal");
   };
 
   useEffect(() => {
@@ -103,15 +114,18 @@ export default function Dashboard() {
   return (
     <div>
       <Section class="hero is-dark is-medium">
-        <div class="hero-body">
+        <div class="hero-body" style={{ backgroundColor: "#151B54" }}>
           <div class="container">
-            <h1 class="title">cPanel Associate Developer Tracker</h1>
+            <h1 class="title" style={{ color: "#fdfff5" }}>
+              <img style={{ height: "100px" }} src={logo2}></img> Associate
+              Developer Tracker
+            </h1>
             <div class="select">
               <select>
                 <option>Select Admin</option>
                 {admins.map((admin) => {
                   for (var i = 0; i < admins.length; i++) {
-                    if (admin.User_Type === "admin") {
+                    if (admin.user_type === "admin") {
                       return <option>{admin.username}</option>;
                     }
                   }
@@ -120,73 +134,124 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <nav class="navbar is-light">
-          <div class="container ml-6">
-            <button class="button is-dark" onClick={userButton}>
+        <nav
+          class="navbar is-light"
+          style={{ display: "flex", justifyContent: "center", padding: "10px" }}
+        >
+          <div
+            class="container"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "10px",
+              margin: '5px'
+            }}
+          >
+            <div class='container' style={{display: 'flex', justifyContent: 'center'}}>
+            <button
+              class="button"
+              onClick={userButton}
+              style={{margin: '5px'}}
+            >
               Add User
             </button>
-            <button class="button is-dark" onClick={taskButton}>
+            <button
+              class="button"
+              onClick={taskButton}
+              style={{margin: '5px'}}
+            >
               Add Task
             </button>
             <button
-              class="button is-dark"
+              class="button"
               id="reportButton"
               onClick={reportButton}
+              style={{margin: '5px'}}
             >
               Add Report
             </button>
-            <div className={reportModal}>
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Report Submission</p>
-                  <button
-                    onClick={closeReportButton}
-                    class="delete"
-                    aria-label="close"
-                  ></button>
-                </header>
-                <section class="modal-card-body">
-                  <ReportSubmission candidates={candidates} />
-                </section>
-                <footer class="modal-card-foot"></footer>
-              </div>
+            <button
+              class="button"
+              onClick={mentorButton}
+              style={{margin: '5px'}}
+            >
+              Add Mentor
+            </button>
             </div>
-            <div className={taskModal}>
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Task Submission</p>
-                  <button
-                    onClick={closeTaskButton}
-                    class="delete"
-                    aria-label="close"
-                  ></button>
-                </header>
-                <section class="modal-card-body">
-                  <TaskSubmission candidates={candidates} />
-                </section>
-                <footer class="modal-card-foot"></footer>
-              </div>
-            </div>
-            <div className={userModal}>
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">User Submission</p>
-                  <button
-                    onClick={closeUserButton}
-                    class="delete"
-                    aria-label="close"
-                  ></button>
-                </header>
-                <section class="modal-card-body">
-                  <UserSubmission candidates={candidates} />
-                </section>
-                <footer class="modal-card-foot"></footer>
-              </div>
+            
+          </div>
+
+          <div className={mentorModal}>
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Mentor Submission</p>
+                <button
+                  onClick={closeMentorButton}
+                  class="delete"
+                  aria-label="close"
+                ></button>
+              </header>
+              <section class="modal-card-body">
+                <MentorSubmission />
+              </section>
+              <footer class="modal-card-foot"></footer>
             </div>
           </div>
+          <div className={reportModal}>
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Report Submission</p>
+                <button
+                  onClick={closeReportButton}
+                  class="delete"
+                  aria-label="close"
+                ></button>
+              </header>
+              <section class="modal-card-body">
+                <ReportSubmission candidates={candidates} />
+              </section>
+              <footer class="modal-card-foot"></footer>
+            </div>
+          </div>
+          <div className={taskModal}>
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">
+                  Task Submission
+                </p>
+                <button
+                  onClick={closeTaskButton}
+                  class="delete"
+                  aria-label="close"
+                ></button>
+              </header>
+              <section class="modal-card-body">
+                <TaskSubmission candidates={candidates} />
+              </section>
+              <footer class="modal-card-foot"></footer>
+            </div>
+          </div>
+          <div className={userModal}>
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">User Submission</p>
+                <button
+                  onClick={closeUserButton}
+                  class="delete"
+                  aria-label="close"
+                ></button>
+              </header>
+              <section class="modal-card-body">
+                <UserSubmission candidates={candidates} />
+              </section>
+              <footer class="modal-card-foot"></footer>
+            </div>
+          </div>
+
           <div className={userReport}>
             <div class="modal-background"></div>
             <div class="modal-card">
@@ -202,7 +267,7 @@ export default function Dashboard() {
                 <table class="table is-striped">
                   <thead>
                     <tr>
-                      <th>{reports.User} Reports</th>
+                      <th>{reports.user} Reports</th>
                     </tr>
                     <tr>
                       <th>Name</th>
@@ -216,14 +281,13 @@ export default function Dashboard() {
                     {reports.map((report) => {
                       return (
                         <tr>
-                      <th>{report.Name}</th>
-                      <th>{report.Benchmark}</th>
-                      <th>{report.Content}</th>
-                      <th>{report.Status}</th>
-                    </tr>
-                      )
+                          <th>{report.name}</th>
+                          <th>{report.benchmark}</th>
+                          <th>{report.content}</th>
+                          <th>{report.status}</th>
+                        </tr>
+                      );
                     })}
-                    
                   </tbody>
                 </table>
               </section>
@@ -233,9 +297,17 @@ export default function Dashboard() {
         </nav>
       </Section>
 
-      <div class="columns">
+      <div
+        class="columns"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          padding: "10px",
+          margin: "10px",
+        }}
+      >
         <div class="column">
-          <table class="table is-striped">
+          <table class="table is-striped is-hoverable">
             <thead>
               <tr>
                 <th>Candidates</th>
@@ -246,6 +318,7 @@ export default function Dashboard() {
                 <th>Last</th>
                 <th>UserName</th>
                 <th>Position</th>
+                <th>Mentor</th>
                 <th>Reports</th>
               </tr>
             </thead>
@@ -253,7 +326,7 @@ export default function Dashboard() {
             <tbody>
               {candidates.map((candidate) => {
                 for (var i = 0; i < candidates.length; i++) {
-                  if (candidate.User_Type === "candidate") {
+                  if (candidate.user_type === "candidate") {
                     const getReport = () => {
                       axios
                         .get(
@@ -261,19 +334,20 @@ export default function Dashboard() {
                         )
                         .then(function (response) {
                           setReport(response.data.reports);
-                          setUserReport('modal is-active')
+                          setUserReport("modal is-active");
                         });
                     };
                     return (
                       <tr>
-                        <th>{candidate.User}</th>
-                        <td>{candidate.First_Name}</td>
-                        <td>{candidate.Last_Name}</td>
+                        <th>{candidate.user}</th>
+                        <td>{candidate.first_name}</td>
+                        <td>{candidate.last_name}</td>
                         <td>{candidate.username}</td>
-                        <td>{candidate.User_Type}</td>
+                        <td>{candidate.user_type}</td>
+                        <td>{candidate.mentor}</td>
                         <td>
                           <button
-                            class="button is-dark is-small"
+                            class="button"
                             onClick={getReport}
                           >
                             See Reports
@@ -289,7 +363,7 @@ export default function Dashboard() {
         </div>
 
         <div class="column">
-          <table class="table is-striped">
+          <table class="table is-striped is-hoverable">
             <thead>
               <tr>
                 <th>Tasks</th>
@@ -314,7 +388,7 @@ export default function Dashboard() {
         </div>
 
         <div class="column">
-          <table class="table is-striped">
+          <table class="table is-striped is-hoverable">
             <thead>
               <tr>
                 <th>Reports</th>
@@ -331,10 +405,10 @@ export default function Dashboard() {
               {reports.map((report) => {
                 return (
                   <tr>
-                    <th>{report.Name}</th>
-                    <td>{report.Benchmark}</td>
-                    <td>{report.Content}</td>
-                    <td>{report.Status}</td>
+                    <th>{report.name}</th>
+                    <td>{report.benchmark}</td>
+                    <td>{report.content}</td>
+                    <td>{report.status}</td>
                   </tr>
                 );
               })}
