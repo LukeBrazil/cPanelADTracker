@@ -1,7 +1,19 @@
+.title {
+    color: white;
+    font-size: 46px;
+}
+
 .modal-card-head {
     background: #151B54;
 }
 
 .modal-card-title {
-    color: #F88017;
+    color: white;
+    font-weight: bold;
+}
+
+.button {
+    background: #3d444b;
+    color: white;
+    font-weight: bold;
 }

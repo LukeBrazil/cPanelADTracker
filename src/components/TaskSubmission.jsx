@@ -3,6 +3,8 @@ import { Section, Button, Aside, Select, Form } from "react-bulma-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
+import './styles.css'
+
 export default function TaskSubmission({ candidates }) {
   const { register, handleSubmit, errors } = useForm();
 
@@ -48,7 +50,7 @@ export default function TaskSubmission({ candidates }) {
 
           <button
             onClick="window.location.reload();"
-            class="button is-dark" type="submit" style={{color: '#FF6C2C', margin: '5px'}}
+            class="button" type="submit"
           >
             Submit
           </button>
