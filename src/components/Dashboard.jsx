@@ -147,18 +147,18 @@ export default function Dashboard() {
               margin: '5px'
             }}
           >
-            <div class='container' style={{display: 'flex', justifyContent: 'center'}}>
+            {/* <div class='container' style={{display: 'flex', justifyContent: 'center'}}> */}
             <button
               class="button"
               onClick={userButton}
-              style={{margin: '5px'}}
+              style={{margin: '15px'}}
             >
               Add User
             </button>
             <button
               class="button"
               onClick={taskButton}
-              style={{margin: '5px'}}
+              style={{margin: '15px'}}
             >
               Add Task
             </button>
@@ -166,18 +166,18 @@ export default function Dashboard() {
               class="button"
               id="reportButton"
               onClick={reportButton}
-              style={{margin: '5px'}}
+              style={{margin: '15px'}}
             >
               Add Report
             </button>
             <button
               class="button"
               onClick={mentorButton}
-              style={{margin: '5px'}}
+              style={{margin: '15px'}}
             >
               Add Mentor
             </button>
-            </div>
+            {/* </div> */}
             
           </div>
 
