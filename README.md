@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# cPanel Assoiciate Developer Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was authored by Luke Brazil and Lee Arnold.
 
-## Available Scripts
+## Technologies:
 
-In the project directory, you can run:
+This application used a React frontend and a Flask Backend.
 
-### `npm start`
+## What it does:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This application is used to track the progress of tasks given to a candidate of cPanel
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Code Snippets
 
-### `npm test`
+1) Fetch tasks from Python Flask Api Server
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+useEffect(() => {
+    const getTasks = () => {
+      axios
+        .get("http://127.0.0.1:5000/tasks", {
+          headers: { "Access-Control-Allow-Origin": "*" },
+        })
+        .then(function (response) {
+          console.log("task data", response.data.tasks);
+          setTasks(response.data.tasks);
+        });
+    };
+    getTasks();
 
-### `npm run build`
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2) Map Candidates into a table.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+ <tbody>
+              {candidates.map((candidate) => {
+                for (var i = 0; i < candidates.length; i++) {
+                  if (candidate.user_type === "candidate") {
+                    const getReport = () => {
+                      axios
+                        .get(
+                          `http://127.0.0.1:5000/feedback/${candidate.username}`
+                        )
+                        .then(function (response) {
+                          setReport(response.data.reports);
+                          setUserReport("modal is-active");
+                        });
+                    };
+                    return (
+                      <tr>
+                        <th>{candidate.user}</th>
+                        <td>{candidate.first_name}</td>
+                        <td>{candidate.last_name}</td>
+                        <td>{candidate.username}</td>
+                        <td>{candidate.user_type}</td>
+                        <td>{candidate.mentor}</td>
+                        <td>
+                          <button
+                            class="button"
+                            onClick={getReport}
+                          >
+                            See Reports
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                }
+              })}
+            </tbody>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
+## Screenshots
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[![cPanel1.jpg](https://i.postimg.cc/BZ76WPHg/cPanel1.jpg)](https://postimg.cc/py8xzT0h)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[![cPanel2.jpg](https://i.postimg.cc/R0mC17xM/cPanel2.jpg)](https://postimg.cc/w1WdgsBP)
