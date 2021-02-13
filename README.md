@@ -8,7 +8,7 @@ This application used a React frontend and a Flask Backend.
 
 ## What it does:
 
-This application is used to track the progress of tasks given to a candidate of cPanel
+This application is used to track the progress of tasks given to a candidate of cPanel.
 
 ## Code Snippets
 
